@@ -3,8 +3,8 @@
  */
 const { createHash } = require( 'crypto' );
 const path = require( 'path' );
-const { ExternalsPlugin } = require( 'webpack' );
-const { RawSource } = require( 'webpack-sources' );
+const webpack = require( 'webpack' );
+const { RawSource } = webpack.sources || require( 'webpack-sources' );
 // Ignore reason: json2php is untyped
 // @ts-ignore
 const json2php = require( 'json2php' );
@@ -87,7 +87,7 @@ class DependencyExtractionWebpackPlugin {
 		this.externalizedDeps = new Set();
 
 		// Offload externalization work to the ExternalsPlugin.
-		this.externalsPlugin = new ExternalsPlugin(
+		this.externalsPlugin = new webpack.ExternalsPlugin(
 			'window',
 			this.externalizeWpDeps.bind( this )
 		);
